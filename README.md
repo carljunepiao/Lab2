@@ -1,5 +1,5 @@
 # Processor Management and Job Scheduling
-CMSC 137: Lab Exercise 2 
+Lab Exercise 2 in CMSC 137
 
 Desciption and Instruction
 
