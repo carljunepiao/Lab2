@@ -16,9 +16,12 @@ var context = canvas.getContext("2d");
     Made by: Charlito Piao
 */
 
+//Convert file to array
+
+
+//Entity Process
 var processes = [];
 
-//entity process
 function process(id,arrival,time,priority){
     this.id = id;
     this.arrival = arrival;
@@ -33,152 +36,16 @@ function Initialize(){
         var burstTime = 0;
         var priorityNumber = 0;
 
-        switch (i) {
-            case 1:
-                arrivalTime = 0;
-                burstTime = 20;
-                priorityNumber = 0;
-                break;
-            case 2:
-                arrivalTime = 1;
-                burstTime = 15;
-                priorityNumber = 0;
-                break;
-            case 3:
-                arrivalTime = 2;
-                burstTime = 11;
-                priorityNumber = 1;
-                break;
-            case 4:
-                arrivalTime = 3;
-                burstTime = 9;
-                priorityNumber = 1;
-                break;
-            case 5:
-                arrivalTime = 4;
-                burstTime = 11;
-                priorityNumber = 2;
-                break;            
-            case 6:
-                arrivalTime = 4;
-                burstTime = 9;
-                priorityNumber = 3;
-                break;
-            case 7:
-                arrivalTime = 5;
-                burstTime = 12;
-                priorityNumber = 2;
-                break;
-            case 8:
-                arrivalTime = 5;
-                burstTime = 14;
-                priorityNumber = 4
-                break;
-            case 9:
-                arrivalTime = 6;
-                burstTime = 15;
-                priorityNumber = 3;
-                break;
-            case 10:
-                arrivalTime = 7;
-                burstTime = 19;
-                priorityNumber = 2;
-                break;
-            case 11:
-                arrivalTime = 8;
-                burstTime = 25;
-                priorityNumber = 0;
-                break;
-            case 12:
-                arrivalTime = 9;
-                burstTime = 21;
-                priorityNumber = 1;
-                break;
-            case 13:
-                arrivalTime = 9;
-                burstTime = 8;
-                priorityNumber = 2;
-                break;
-            case 14:
-                arrivalTime = 10;
-                burstTime = 3;
-                priorityNumber = 5;
-                break;
-            case 15:
-                arrivalTime = 10;
-                burstTime = 4;
-                priorityNumber = 5;
-                break;
-            case 16:
-                arrivalTime = 11;
-                burstTime = 14;
-                priorityNumber = 4;
-                break;
-            case 17:
-                arrivalTime = 11;
-                burstTime = 12;
-                priorityNumber = 4;
-                break;
-            case 18:
-                arrivalTime = 12;
-                burstTime = 10;
-                priorityNumber = 2;
-                break;
-            case 19:
-                arrivalTime = 13;
-                burstTime = 10;
-                priorityNumber = 3;
-                break;
-            case 20:
-                arrivalTime = 13;
-                burstTime = 9;
-                priorityNumber = 2;
-                break;
-            default:
-                break;
-        }
-        processes.push(new process(i,arrivalTime,burstTime,priorityNumber));
-
-        arrivalTime++;
-        burstTime++;
-        priorityNumber++;
-    }
-}
-
-//FCFS
-function RunBurstTimeFCFS(time){
-    for(var i = 0; time> i; i++){
         
+        processes.push(new process(i,arrivalTime,burstTime,priorityNumber));
     }
 }
 
-function SJF(){
-
-}
-
-function SRPT(){
-
-}
-
-function Priority(){
-
-}
-
-function RoundRobin(){
-
-}
-
-//Run
+//Initialize values for processes
 Initialize();
-// FCFS();
 
-//Check
-processes.forEach(function(element) {
-    console.log(element);
-}, this);
-
-//Design
-function design(){
+//Design Table
+function Design(){
     context.fillStyle = "white";
 	context.fillRect(0,0,1250,700);
 	context.fillStyle = "black";
@@ -186,12 +53,7 @@ function design(){
     
     //FCFS
     context.fillText("FCFS",30,25);
-    context.fillText("Process Running:",40,80);
-    
-    for(var i = 0; i < processes.length; i++){
-
-    }
-    
+    context.fillText("Process Running:",40,80);    
     context.fillText("Burst Time:",40,130);    
 
     //FCFS Design Table
@@ -202,10 +64,10 @@ function design(){
     context.moveTo(0,40);
     context.lineTo(1330,40);
     context.stroke();
-
-
 }
 
-design();
+function Main(){
+	// ssds
+}
 
-// setInterval("FCFS",500);
+setInterval(Main,1000); //loop and update page
