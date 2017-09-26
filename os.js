@@ -1,5 +1,6 @@
-// var canvas = document.getElementById("osCanvas");
-// var context = canvas.getContext("2d");
+var canvas = document.getElementById("osCanvas");
+var context = canvas.getContext("2d");
+var count = 0; //input file triggered
 
 /* Desciption and Instruction
 
@@ -15,93 +16,101 @@
 
     Made by: Charlito Piao
 */
-var text_1;
-var text_2;
 
-function preload(){
-    text_1 = loadStrings("process1.txt");
-    console.log(text_1);
+var processes = [];
+
+//Entity Process
+function process(id,arrival,time,priority){
+    this.id = id;
+    this.arrival = arrival;
+    this.burstTime = time;
+    this.priority = priority;
 }
 
-preload();
-
-// document.getElementById('file').onchange = function(){
-//     var processes = [];
-
-//     //Entity Process
-//     function process(id,arrival,time,priority){
-//         this.id = id;
-//         this.arrival = arrival;
-//         this.burstTime = time;
-//         this.priority = priority;
-//     }
-
-//     //Convert file to array    
-//     var text = [];
-
-//     var file = this.files[0];
-//     var reader = new FileReader();
+document.getElementById('file').onchange = function(){
+    var text = [];
+    var file = this.files[0];
+    var reader = new FileReader();
     
-//     reader.onload = function(progressEvent){
-//         var lines = this.result.split('\n');
-//         for(var line = 1; line < lines.length; line++){
-//             var temp = lines[line].split(' ');
-//             text.push(temp[0]);
-//         }
+    reader.onload = function(progressEvent){
+        count++;
 
-//         //run design table
-//         Design();
-
-//         //Intiliaze values for each process
-//         for(var i = 0; text.length > i; i++){
-//             var temp = text[i].split(' ');
-//             var temp2 = temp[i].split(' ');
-//             Initialize(temp2[0],temp2[1],temp2[2],temp2[3]);
-//         }
-
-//     };
-//     reader.readAsText(file);
-
-    
-
-//     //Put values in each proces of processes
-//     function Initialize(i, arrivalTime,burstTime,priorityNumber){
-//         console.log(i);
-//         console.log(arrivalTime);
-//         console.log(burstTime);
-//         console.log(priorityNumber);
-//         processes.push(new process(i,arrivalTime,burstTime,priorityNumber));
-//     }
-
-//     //Initialize values for processes
-//     // Initialize();
-
-//     //Design Table
-//     function Design(){
-//         context.fillStyle = "white";
-//         context.fillRect(0,0,1250,700);
-//         context.fillStyle = "black";
-//         context.font = "16px Calibri";
+        if(count == 2){ //Reset processes values
+            processes = [];
+        }
         
-//         //FCFS
-//         context.fillText("FCFS",30,25);
-//         context.fillText("Process Running:",40,80);    
-//         context.fillText("Burst Time:",40,130);    
+        var lines = this.result.split('\n');
+        var temp = [];
+        var temp2 = [];
+        var proc = [];
 
-//         //FCFS Design Table
-//         context.moveTo(480,0);
-//         context.lineTo(480,1000);
-//         context.stroke();
+        for(var line = 1; line < lines.length; line++){
+            var temp = lines[line].split(' ');
+            text.push(temp[0]);
+        }
 
-//         context.moveTo(0,40);
-//         context.lineTo(1330,40);
-//         context.stroke();
-//     }
+        for(var i = 0; text.length > i; i++){
+            temp[i] = text[i].split(' ');
+            temp2.push(temp[i][0]);
+        }
 
-//     function Main(){
-//         // ssds
-//         console.log("main running");
-//     }
+        for(var i = 0; i < temp2.length; i++){
+            proc.push(temp2[i].replace(/\s/g,' ').split(" "));
+        }
 
-//     setInterval(Main,1000); //loop and update page
-// };
+        for(var i = 0; i < proc.length; i++){
+            for(var j = 0; j < proc[i].length; j++){
+                if(proc[i][j] === ""){
+                    proc[i] = proc[i].filter(function(item) { 
+                        return item !== proc[i][j];
+                    })
+                }
+            }
+        }
+
+        //initialize values for each process
+        for(var i = 0; i <proc.length; i++){
+            Initialize(proc[i][0],proc[i][1],proc[i][2],proc[i][3]);
+        }
+
+        console.log(processes);
+    };
+    reader.readAsText(file);
+
+    //Put values in each proces of processes
+    function Initialize(i, arrivalTime,burstTime,priorityNumber){
+        processes.push(new process(i,arrivalTime,burstTime,priorityNumber));
+    }
+
+    function Main(){
+        // ssds
+        console.log("main running");
+    }
+
+    // setInterval(Main,1000); //loop and update page
+};
+
+//run design table
+Design();
+
+//Design Table
+function Design(){
+    context.fillStyle = "white";
+    context.fillRect(0,0,1250,700);
+    context.fillStyle = "black";
+    context.font = "16px Calibri";
+    
+    //FCFS
+    context.fillText("FCFS",30,25);
+    context.fillText("Process Running:",40,80);    
+    context.fillText("Burst Time:",40,130);    
+
+    //FCFS Design Table
+    context.moveTo(480,0);
+    context.lineTo(480,1000);
+    context.stroke();
+
+    context.moveTo(0,40);
+    context.lineTo(1330,40);
+    context.stroke();
+}
