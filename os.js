@@ -21,9 +21,12 @@
     var count = 0; //event input file triggered
     var processes = [];
     var average_waiting_time;
-
-//For Round Robin Scheduling
-    var slice = 4;
+    var FCFS_processes;
+    var FJS_processes;
+    var SRPT_processes;
+    var Priority_processes;
+    var RoundRobin_processes;
+    var time_slice = 4; //For Round Robin Scheduling
 
 //Entity Process
     
@@ -37,7 +40,7 @@
     }
 
 //Triggered when file is inputted
-    
+
     document.getElementById('file').onchange = function(){
         var text = [];
         var file = this.files[0];
@@ -83,15 +86,19 @@
                 Initialize(proc[i][0],proc[i][1],proc[i][2],proc[i][3],waiting);
                 waiting+=parseInt(proc[i][2]);
             }
+            
+            FCFS_processes = processes;
+            ComputeAverageWaitingTime(FCFS_processes); //Compute Average Waiting Time of Processes
+            
+            //FJS
+            FJS_processes = OrderByFJS(processes);
 
-            ComputeAverageWaitingTime(processes); //Compute Average Waiting Time of Processes
-        
         };
         reader.readAsText(file);
 
-    //Seperate: this is for the loop and functions
+        //Seperate: this is for the loop and functions
     
-        //Design Table
+            //Design Table
             function Design(){
                 context.fillStyle = "white";
                 context.fillRect(0,0,1250,700);
@@ -141,26 +148,32 @@
 
             }
 
-        function Main(){
-            // for(var i = 0; i < processes.length; i++){
-                
-            // }
-            Design();
-        }
-
-        function ComputeAverageWaitingTime(p){
-            var average;
-            console.log(p);
-            for(var i = 0; p.length; i++){
-                console.log(average);
-                // average += p[i].waitingTime;
+            //Main Loop
+            function Main(){
+                // for(var i = 0; i < processes.length; i++){
+                    
+                // }
+                Design();
             }
-            average_waiting_time = average;
-        }
 
-        function Initialize(i, arrivalTime,burstTime,priorityNumber,waitingTime){
-            processes.push(new process(i,arrivalTime,burstTime,priorityNumber,waitingTime));
-        }
+            function ComputeAverageWaitingTime(p){
+                var average = 0;
+                // console.log(p[0]);
+                for(var i = 0; i < p.length; i++){
+                    average += p[i].waitingTime;
+                    average = average/20;
+                }
+                console.log(average);
+                average_waiting_time = average;
+            }
 
-        setInterval(Main,1000); //loop and update page
-};
+            function Initialize(i, arrivalTime,burstTime,priorityNumber,waitingTime){
+                processes.push(new process(i,arrivalTime,burstTime,priorityNumber,waitingTime));
+            }
+
+            function OrderByFJS(processes){
+                
+            }
+
+            setInterval(Main,1000); //loop and update page
+    };
